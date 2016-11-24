@@ -1,4 +1,4 @@
-# Spotify automatic installer for openSUSE
+# Spotify installer for openSUSE LEAP 42.2 (and 42.1)
 
 This script avoids the need to illegally redistribute Spotify binaries
 by downloading the Linux client `.deb` from
@@ -10,12 +10,13 @@ them to be.
 ## Current status
 
 Currently
-[this code is broken](https://github.com/aspiers/opensuse-spotify-installer/issues),
+~~[this code is broken](https://github.com/aspiers/opensuse-spotify-installer/issues),
 however
-[work is underway to fix it](https://github.com/aspiers/opensuse-spotify-installer/pull/37).
-In the mean time, you may have luck with the PackMan installer which
-is based on a patched version of this code - see below for details.
-If that fails, you could also try
+[work is underway to fix it](https://github.com/aspiers/opensuse-spotify-installer/pull/37).~~
+
+**This repository is a [fork from aspiers](https://github.com/aspiers/opensuse-spotify-installer) that right now looks unmaintained. I made an effort to fix the issues, getting the installer work again with a minor addition to the usage process (see step 0 in [How to use](#how-to-use) below).**
+
+You could also try
 [`spotify-make`](https://github.com/leamas/spotify-make).  The hope is
 that we ultimately reach
 [a unified solution](https://github.com/aspiers/opensuse-spotify-installer/pull/37#issuecomment-95361176)
@@ -24,18 +25,9 @@ efficient and collaborative manner.
 
 ## How to use
 
-This installer is conveniently pre-packaged on
-[PackMan](http://packman.links2linux.org/).  The easiest way to use it
-is as follows:
-
-1. Install the `spotify-installer` package from Packman via [1-click install](http://packman.links2linux.org/install/spotify-installer) (you can also find the button on [this page](http://packman.links2linux.org/package/spotify-installer)), or via [YaST and/or zypper](http://wiki.links2linux.de/packman:faq_en#software_installation_updates_deinstallation).
-2. Run `install-spotify` as a non-root user (e.g. from any terminal program).
-
-Alternatively, once we fix some known issues, you will be able to skip
-PackMan and use it as follows:
-
-1. Download the [`install-spotify.sh`](https://raw.github.com/aspiers/opensuse-spotify-installer/master/install-spotify.sh) script
-2. Download [`spotify-client.spec`](https://raw.github.com/aspiers/opensuse-spotify-installer/master/spotify-client.spec) and place it in `/usr/src/packages/SPECS`
+0. Download and install [libgcrypt11 via YaST](https://software.opensuse.org/package/libgcrypt11)
+1. Download the [`install-spotify.sh`](https://raw.github.com/janwillhaus/opensuse-spotify-installer/master/install-spotify.sh) script
+2. Download [`spotify-client.spec`](https://raw.github.com/janwillhaus/opensuse-spotify-installer/master/spotify-client.spec) and place it in `/usr/src/packages/SPECS`
 3. *(optional)* Read the source to make sure it's not going to [pwn](http://en.wikipedia.org/wiki/Pwn) your computer.
 4. Make the script executable, e.g. from a terminal, type `chmod +x install-spotify.sh`
 5. Run it as a non-root user, e.g. from a terminal type `./install-spotify.sh`
