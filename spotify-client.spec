@@ -67,9 +67,9 @@ It includes the following features:
 # unpack deb
 ar -x %{SOURCE0}
 # unpack data
-tar -xzf data.tar.gz
+tar -xf data.tar.xz
 # remove used files
-rm {control,data}.tar.gz debian-binary
+rm data.tar.xz control.tar.gz debian-binary
 
 %define _use_internal_dependency_generator 0
 %define __find_requires %_builddir/%{name}-%{version}/find-requires.sh
