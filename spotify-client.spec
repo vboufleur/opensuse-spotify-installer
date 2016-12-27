@@ -115,6 +115,15 @@ if [ "$1" = 0 ]; then
     /sbin/ldconfig
 fi
 
+for icon in $(ls -1 $spotifyPath/icons/spotify-linux-*.png); do
+    size="${icon##*/spotify-linux-}"
+    xdg-icon-resource uninstall --noupdate --size "${size%.png}" "$icon" "spotify-client" || true
+done
+
+xdg-desktop-menu uninstall --novendor "spotify.desktop" || true
+update-menus || true
+
+
 %files
 %defattr(-,root,root)
 %spotifydir
