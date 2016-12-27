@@ -8,7 +8,7 @@
 
 SPOTIFY_BIN="/usr/bin/spotify"
 
-POOL_URL="http://repository.spotify.com/pool/non-free/s/spotify"
+POOL_URL="http://repository.spotify.com/pool/non-free/s/spotify-client"
 
 #RPM_TOPDIR="/usr/src/packages"
 RPM_TOPDIR="$HOME/rpmbuild"
@@ -21,10 +21,14 @@ RPM_SPEC_DIR="/usr/src/packages/SPECS"
 
 # Name of file residing within official Spotify repository above
 RPM_NAME="spotify-client"
-VERSION="0.9.17_0.9.17.8.gd06432d.31-1"
-BASENAME="${RPM_NAME}-$VERSION"
+VERSION="1.0.45.186.g3b5036d6"
+RELEASE_X86="28"
+RELEASE_X64="95"
+BASENAME="${RPM_NAME}_$VERSION"
 
-ISSUE_TRACKER_URL="https://github.com/aspiers/opensuse-spotify-installer/issues"
+ISSUE_TRACKER_URL="https://github.com/janwillhaus/opensuse-spotify-installer/issues"
+
+BASEDIR=$(dirname "$0")
 
 main () {
     parse_args "$@"
@@ -177,10 +181,12 @@ please uninstall first via:
 download_spotify_deb () {
     arch=$(arch)
     if [ "$arch" == "x86_64" ]; then
-        deb=${BASENAME}_amd64.deb
+        RELEASE=$RELEASE_X64
+        deb=${BASENAME}-${RELEASE}_amd64.deb
         rpmarch="x86_64"
     elif [ "$arch" == "i686" ]; then
-        deb=${BASENAME}_i386.deb
+        RELEASE=$RELEASE_X86
+        deb=${BASENAME}-${RELEASE}_i386.deb
         rpmarch="i586"
     else
         fatal "
@@ -213,9 +219,9 @@ build_rpm () {
     echo "About to build $RPM_NAME rpm; please be patient ..."
     echo
     sleep 3
-    safe_run rpmbuild -ba "$RPM_SPEC_DIR/${RPM_NAME}.spec"
+    safe_run rpmbuild -ba --noclean "$BASEDIR/${RPM_NAME}.spec"
 
-    rpm="$RPM_DIR/${RPM_NAME}-${VERSION}.$rpmarch.rpm"
+    rpm="$RPM_DIR/${RPM_NAME}-${VERSION}-${RELEASE}.$rpmarch.rpm"
 
     if ! [ -e "$rpm" ]; then
         fatal "
