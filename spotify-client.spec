@@ -15,14 +15,15 @@
 Name:           spotify-client
 Version:        1.0.45.186.g3b5036d6
 License:        Commercial
-Release:        95
 Summary:        Desktop client for Spotify streaming music service
 Url:            http://www.spotify.com/download/previews/
 Group:          Productivity/Multimedia/Sound/Players
 %ifarch x86_64
-Source0: spotify-client_%{version}-%{release}_amd64.deb
+Release:        95
+Source0:        spotify-client_%{version}-%{release}_amd64.deb
 %else
-Source0: spotify-client_%{version}-28_i386.deb
+Release:        28
+Source0:        spotify-client_%{version}-%{release}_i386.deb
 %endif
 NoSource:       0
 %if 0%{?suse_version}
@@ -131,6 +132,9 @@ update-menus || true
 %{_bindir}/spotify
 
 %changelog
+* Tue Dec 27 2016 Jan Willhaus <mail@janwillhaus.de>
+- update to 1.0.45 (moved to /usr/share/spotify)
+
 * Sat Jan 05 2013 Adam Spiers <spotify-on-opensuse@adamspiers.org>
 - add README
 
