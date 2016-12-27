@@ -84,20 +84,6 @@ chmod +x %__find_requires
 %install
 mv usr %{buildroot}
 %define spotifydir /usr/share/spotify
-%define desktopdir /usr/share/applications
-%define icondir    /usr/share/icons/hicolor
-
-desktop=%{buildroot}%{desktopdir}/spotify.desktop
-
-# for size in ls "%{buildroot}%{spotifydir}/icons/spotify-linux*" | grep -Eo '[0-9]+' ; do
-#     mkdir -p %{buildroot}%{icondir}/${size}x${size}/apps/
-#     cp %{buildroot}%{spotifydir}/icons/spotify-linux-${size}.png %{buildroot}%{icondir}/${size}x${size}/apps/%{name}.png
-# done
-
-
-mkdir -p %{buildroot}%{desktopdir}
-mv %{buildroot}%{spotifydir}/spotify.desktop $desktop
-%suse_update_desktop_file $desktop
 
 mkdir -p %{buildroot}%{_docdir}/%{name}
 mv %{buildroot}%{_docdir}/../%{name}/* %{buildroot}%{_docdir}/%{name}/
@@ -111,8 +97,14 @@ EOF
 
 %post
 /sbin/ldconfig
-%desktop_database_post
-%icon_theme_cache_post
+
+for icon in $(ls -1 %{spotifydir}/icons/spotify-linux-*.png); do
+    size="${icon##*/spotify-linux-}"
+    xdg-icon-resource install --noupdate --size "${size%.png}" "$icon" "spotify-client" || true
+done
+
+xdg-desktop-menu install --novendor "%{spotifydir}/spotify.desktop" || true
+update-menus || true
 
 
 %preun
@@ -122,15 +114,12 @@ EOF
 if [ "$1" = 0 ]; then
     /sbin/ldconfig
 fi
-%desktop_database_postun
-%icon_theme_cache_postun
 
 %files
 %defattr(-,root,root)
 %spotifydir
 %doc %{_docdir}/%{name}
 %{_bindir}/spotify
-%{desktopdir}/spotify.desktop
 
 %changelog
 * Sat Jan 05 2013 Adam Spiers <spotify-on-opensuse@adamspiers.org>
