@@ -25,12 +25,8 @@ efficient and collaborative manner.
 
 ## How to use
 
-0. Download and install [libgcrypt11 via YaST](https://software.opensuse.org/package/libgcrypt11)
-1. Download the [`install-spotify.sh`](https://raw.github.com/janwillhaus/opensuse-spotify-installer/master/install-spotify.sh) script
-2. Download [`spotify-client.spec`](https://raw.github.com/janwillhaus/opensuse-spotify-installer/master/spotify-client.spec) and place it in `/usr/src/packages/SPECS`
-3. *(optional)* Read the source to make sure it's not going to [pwn](http://en.wikipedia.org/wiki/Pwn) your computer.
-4. Make the script executable, e.g. from a terminal, type `chmod +x install-spotify.sh`
-5. Run it as a non-root user, e.g. from a terminal type `./install-spotify.sh`
+1. Clone the repository using `git clone https://github.com/janwillhaus/opensuse-spotify-installer.git`
+2. Run the installer script as non-root user: `./install-spotify.sh`
 
 The installer uses `sudo` for operations which require root privileges, so
 you may be prompted for a password during the install.
